@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificador de Municipios - Jaén</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+      width: 100%;
+      display: grid;
+      gap: 25px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      color: #666;
+      font-size: 1rem;
+    }
+
+    form {
+      display: grid;
+      gap: 15px;
+    }
+
+    input[type="text"] {
+      padding: 12px 15px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #007b55;
+      outline: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .verificar {
+      background-color: #007b55;
+      color: white;
+    }
+
+    .verificar:hover {
+      background-color: #005e40;
+    }
+
+    .resetear {
+      background-color: #c62828;
+      color: white;
+    }
+
+    .resetear:hover {
+      background-color: #a31b1b;
+    }
+
+    #resultado {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .correcto {
+      background-color: #e0f8eb;
+      color: #1a7f4b;
+    }
+
+    .incorrecto {
+      background-color: #fce2e2;
+      color: #c62828;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Verificador de Municipios</h1>
+    <p>Introduce un municipio para saber si pertenece a la provincia de Jaén</p>
+    <form id="formulario">
+      <input type="text" id="municipio" placeholder="Ejemplo: Úbeda" required />
+      <div class="button-group">
+        <button type="submit" class="verificar">Verificar</button>
+        <button type="button" id="resetear" class="resetear">Resetear</button>
+      </div>
+    </form>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    const municipiosJaen = [
+      "Jaén", "Andújar", "Linares", "Úbeda", "Martos", "Alcalá la Real",
+      "Baeza", "La Carolina", "Torredonjimeno", "Mengíbar", "Torreperogil",
+      "Bailén", "Mancha Real", "Villanueva del Arzobispo", "Jódar",
+      "Cazorla", "Castillo de Locubín", "Arjona", "Porcuna", "Beas de Segura"
+    ];
+
+    const formulario = document.getElementById("formulario");
+    const municipioInput = document.getElementById("municipio");
+    const resultado = document.getElementById("resultado");
+    const resetearBtn = document.getElementById("resetear");
+
+    formulario.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const input = municipioInput.value.trim().toLowerCase();
+      resultado.classList.remove("correcto", "incorrecto");
+
+      const encontrado = municipiosJaen.some(m => m.toLowerCase() === input);
+
+      if (encontrado) {
+        resultado.textContent = "✅ Sí, pertenece a la provincia de Jaén.";
+        resultado.classList.add("correcto");
+      } else {
+        resultado.textContent = "❌ No pertenece a la provincia de Jaén.";
+        resultado.classList.add("incorrecto");
+      }
+    });
+
+    resetearBtn.addEventListener("click", function() {
+      municipioInput.value = "";
+      resultado.textContent = "";
+      resultado.classList.remove("correcto", "incorrecto");
+      municipioInput.focus();
+    });
+  </script>
+</body>
+</html>
